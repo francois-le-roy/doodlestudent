@@ -1,9 +1,19 @@
 version: "3.8"
 services:
   api:
-    build: ./api/
+    image: maven
+    volumes:
+      - "./api:/app"
+    working_dir: /app    
+    environment: 
+      QUARKUS_DATASOURCE_JDBC_URL:  jdbc:mysql://db:3306/database?autoReconnect=true&useSSL=false    
     ports: 
       - "9090:9090"
+    depends_on:
+      - db
+      - etherpad
+      - mail      
+    command: "mvn clean verify install quarkus:dev"    
   db:
     image: mysql
     ports:
@@ -11,7 +21,7 @@ services:
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=true
   etherpad:
-    image: ./api/etherpad/etherpad:stable
+    image: etherpad/etherpad:stable
     ports:
       - "9001:9001"
     volumes:
