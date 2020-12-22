@@ -6,14 +6,14 @@ services:
       - "./api:/app"
     working_dir: /app    
     environment: 
-      QUARKUS_DATASOURCE_JDBC_URL:  jdbc:mysql://db:3306/database?autoReconnect=true&useSSL=false    
+      - MYSQL_URI=jdbc:mysql://db:3306
     ports: 
       - "9090:9090"
     depends_on:
       - db
       - etherpad
       - mail      
-    command: "mvn clean verify install quarkus:dev"    
+    command: "mvn quarkus:dev"    
   db:
     image: mysql
     ports:
