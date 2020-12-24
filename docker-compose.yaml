@@ -12,8 +12,13 @@ services:
     depends_on:
       - db
       - etherpad
-      - mail      
-    command: "mvn quarkus:dev"    
+      - mail
+    command: "mvn quarkus:dev"       
+  front:
+    build: ./front/
+    ports:
+      - "4200:4200"        
+    command: "ng serve --host 0.0.0.0 "    
   db:
     image: mysql
     ports:
