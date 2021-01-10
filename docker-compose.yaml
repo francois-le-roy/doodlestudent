@@ -1,14 +1,41 @@
 version: "3.8"
 services:
+  mywww:
+    image: bunkerity/bunkerized-nginx
+    restart: always
+    ports:
+      - 80:8080
+      - 443:8443
+    volumes:
+      - ./server-confs:/server-confs         # custom confs at server context for permalinks
+    environment:
+      - MULTISITE=yes      
+      - USE_FAIL2BAN=no       
+      - SERVER_NAME=doodle.diverse-team.fr pad.diverse-team.fr phpmyadmin.diverse-team.fr
+      - SERVE_FILES=no
+      - DISABLE_DEFAULT_SERVER=no
+    # Transmission de l'IP publique vers les containers
+      - PROXY_REAL_IP=yes
+#      - MAX_CLIENT_SIZE=100m
+#      - USE_ANTIBOT=captcha
+# Configuration de letencrypt
+      - AUTO_LETS_ENCRYPT=no
+# redirect du 80 vers 443 automatique
+      - REDIRECT_HTTP_TO_HTTPS=no
+      - USE_LIMIT_REQ=no
+# Désactivation http2
+      - HTTP2=no
+# Paramétrage des entêtes http
+      - FEATURE_POLICY=accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; display-capture 'none'; document-domain 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'self'; usb 'none'; vibrate 'none'; vr 'none'   
   api:
     image: maven
+    ports: 
+      - "8080"
     volumes:
       - "./api:/app"
     working_dir: /app    
     environment: 
       - MYSQL_URI=jdbc:mysql://db:3306
-    ports: 
-      - "9090:9090"
     depends_on:
       - db
       - etherpad
@@ -18,7 +45,7 @@ services:
     build: ./front/
     ports:
       - "4200:4200"        
-    command: "ng serve --host 0.0.0.0 "    
+    command: "ng serve --host 0.0.0.0 --disable-host-check"    
   db:
     image: mysql
     ports:
