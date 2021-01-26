@@ -1,5 +1,10 @@
+language: java
+jdk: openjdk11
+node_js: lts/*
+service:
+  - docker
 env:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.27.4
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
