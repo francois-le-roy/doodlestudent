@@ -3,6 +3,7 @@ jdk: openjdk11
 node_js: lts/*
 service:
   - docker
+script: ant build    
 env:
   - DOCKER_COMPOSE_VERSION=1.27.4
 
