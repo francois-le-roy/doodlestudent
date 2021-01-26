@@ -9,7 +9,7 @@ services:
     volumes:
       - ./server-confs:/server-confs         # custom confs at server context for permalinks
     environment:
-      - MULTISITE=yes      
+      - MULTISITE=no      
       - USE_FAIL2BAN=no       
       - SERVER_NAME=doodle.diverse-team.fr pad.diverse-team.fr phpmyadmin.diverse-team.fr
       - SERVE_FILES=no
