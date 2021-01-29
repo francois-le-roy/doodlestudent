@@ -1,19 +1,10 @@
-FROM node:latest
-
+FROM node:10-alpine as build-step
 WORKDIR app/
+COPY package.json /app
+RUN npm install
+COPY . /app
+RUN npm run build --prod 
 
-COPY package*.json ./
-
-COPY angular.json ./
-
-COPY tsconfig*.json ./
-
-COPY proxy.conf.json ./
-
-RUN npm install && npm install -g @angular/cli
-
-COPY ./src $HOME/app/src
-
-EXPOSE 4200
-
-CMD [ "ng" , "serve" ]
+FROM bunkerity/bunkerized-nginx as prod
+COPY --from=build-step /app/dist/tlcfront /www
+RUN ls /www

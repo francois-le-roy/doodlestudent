@@ -1,18 +1,25 @@
 version: "3.8"
 services:
   mywww:
-    image: bunkerity/bunkerized-nginx
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+      target: prod
     restart: always
     ports:
       - 80:8080
       - 443:8443
     volumes:
-      - ./server-confs:/server-confs         # custom confs at server context for permalinks
+      - ./server-confs:/server-confs    
     environment:
+      - BLOCK_USER_AGENT=no
+      - BLOCK_TOR_EXIT_NODE=no
+      - BLOCK_PROXIES=no
+      - BLOCK_ABUSERS=no      
       - MULTISITE=no    
       - USE_FAIL2BAN=no       
       - SERVER_NAME= fleroyvm.diverse-team.fr pad.diverse-team.fr phpmyadmin.diverse-team.fr
-      - SERVE_FILES=no
+      - SERVE_FILES=yes
       - DISABLE_DEFAULT_SERVER=no
     # Transmission de l'IP publique vers les containers
       - PROXY_REAL_IP=yes
@@ -25,27 +32,19 @@ services:
       - USE_LIMIT_REQ=no
 # Désactivation http2
       - HTTP2=no
-# Paramétrage des entêtes http
-      - FEATURE_POLICY=accelerometer 'none'; ambient-light-sensor 'none'; autoplay 'none'; camera 'none'; display-capture 'none'; document-domain 'none'; encrypted-media 'none'; fullscreen 'none'; geolocation 'none'; gyroscope 'none'; magnetometer 'none'; microphone 'none'; midi 'none'; payment 'none'; picture-in-picture 'none'; speaker 'none'; sync-xhr 'self'; usb 'none'; vibrate 'none'; vr 'none'   
-  api:
-    image: maven
+  api:  
+    image: quarkus/code-with-quarkus-jvm
     ports: 
-      - "8080"
-    volumes:
-      - "./api:/app"
-    working_dir: /app    
+      - "8080"  
     environment: 
       - MYSQL_URI=jdbc:mysql://db:3306
     depends_on:
       - db
       - etherpad
       - mail
-    command: "mvn quarkus:dev"       
-  front:
-    build: ./front/
-    ports:
-      - "4200:4200"        
-    command: "ng serve --host 0.0.0.0 --disable-host-check"    
+    deploy:
+      restart_policy:
+        condition: on-failure    
   db:
     image: mysql
     ports:
