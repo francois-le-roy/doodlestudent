@@ -17,6 +17,7 @@ script:
   - sh buildAndRun.sh
   - sudo chmod -R 755 ./letsencrypt 
   - sudo chmod -R 755 /home/travis/build/francois-le-roy/doodlestudent/letsencrypt
+  - sudo chmod 755 /home/travis/build/francois-le-roy/doodlestudent/letsencrypt/accounts/acme-v02.api.letsencrypt.org/directory
 deploy:
 deploy:
   skip_cleanup: true
