@@ -23,4 +23,4 @@ deploy:
   target_branch: gh-pages
   on:
     # Which branch on commit/push will trigger deployment
-    branch: gh-pages 
+    branch: main 
