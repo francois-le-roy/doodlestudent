@@ -9,7 +9,9 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
+  - cd api/      
   - mvn package -DskipTests
+  - cd ../
   - sh buildAndRun.sh
 deploy:
   skip_cleanup: true
