@@ -13,7 +13,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt  
     environment:
       - MULTISITE=no     
-      - SERVER_NAME=fleroyvm.diverse-team.fr #pad.diverse-team.fr # phpmyadmin.diverse-team.fr          
+      - SERVER_NAME=fleroyvm.diverse-team.fr pad.diverse-team.fr # phpmyadmin.diverse-team.fr          
       - SERVE_FILES=yes
       - USE_FAIL2BAN=no
       - DISABLE_DEFAULT_SERVER=no
