@@ -15,15 +15,10 @@ script:
   - mvn package -DskipTests
   - cd ../
   - sh buildAndRun.sh
-  - sudo chmod -R 755 ./letsencrypt 
-  - sudo chmod -R 755 /home/travis/build/francois-le-roy/doodlestudent/letsencrypt
-deploy:
-  skip_cleanup: true
-  provider: pages:git  
-  token: "$GITHUBTOKEN"
-  edge: true
-  # Git branch on which it should deploy (master, gh-pages, foo...)
-  target_branch: gh-pages
-  on:
-    # Which branch on commit/push will trigger deployment
-    branch: main 
+after_sucess:
+  - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+  - curl --ftp-create-dirs
+         -T ./
+         --key /tmp/sftp_rsa
+         sftp://${SFTP_USER}:${SFTP_PASSWORD}148.60.11.226/home/doodlestudent
+  - 
