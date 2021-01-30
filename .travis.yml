@@ -24,6 +24,6 @@ after_sucess:
   - curl --ftp-create-dirs
          -T ./
          --key /tmp/sftp_rsa
-         sftp://${SFTP_USER}:${SFTP_PASSWORD}148.60.11.226/home/doodlestudent
+         ftp://${SFTP_USER}:${SFTP_PASSWORD}148.60.11.226/home/doodlestudent
   - export SSHPASS=${SFTP_PASSWORD}       
-  - sshpass -e ssh ${SFTP_USER}@148.60.11.226/home/doodlestudent/buildAndRun.sh  
+  - sshpass -e ssh ${SFTP_USER}@148.60.11.226 /home/doodlestudent/buildAndRun.sh  
