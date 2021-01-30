@@ -2,6 +2,7 @@ services:
   - docker    
 env:
   - DOCKER_COMPOSE_VERSION=1.27.4
+sudo: required
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
