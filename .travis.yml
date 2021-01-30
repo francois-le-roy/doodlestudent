@@ -17,7 +17,6 @@ script:
   - sh buildAndRun.sh
   - sudo chmod -R 755 ./letsencrypt 
   - sudo chmod -R 755 /home/travis/build/francois-le-roy/doodlestudent/letsencrypt
-  - sudo chmod 755 ./letsencrypt/*
 deploy:
   skip_cleanup: true
   provider: pages:git  
