@@ -9,5 +9,11 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
+  - mvn package -DskipTests
   - sh buildAndRun.sh
-  - docker-compose down
+deploy:
+  skip_cleanup: true
+  provider: pages:git  
+  token: $GITHUBTOKEN
+  edge: true
+    
