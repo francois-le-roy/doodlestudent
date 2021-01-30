@@ -15,8 +15,8 @@ script:
   - mvn package -DskipTests
   - cd ../
   - sh buildAndRun.sh
-  - sudo chmod 755 /etc/letsencrypt/keys  
-  - sudo chmod 755 /etc/letsencrypt 
+  - sudo chmod 755 ./letsencrypt/keys  
+  - sudo chmod 755 ./letsencrypt 
 deploy:
 deploy:
   skip_cleanup: true
