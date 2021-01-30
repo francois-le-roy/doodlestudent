@@ -11,8 +11,8 @@ sudo: required
 
 before_install:
   - sudo apt update
+  - sudo apt install sshpass
   - sudo apt install openfortivpn
-  - sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "VPN_PASS" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
@@ -25,9 +25,9 @@ script:
   - sh buildAndRun.sh
 after_sucess:
   - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
-  - curl --ftp-create-dirs
-         -T ./
-         --key /tmp/sftp_rsa
-         ftp://${SFTP_USER}:${SFTP_PASSWORD}148.60.11.226/home/doodlestudent
+  - sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "VPN_PASS" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6
   - export SSHPASS=${SFTP_PASSWORD}       
+  - sshpass -e sftp -oBatchMode=no -b - zprojet@148.60.11.226
+  - cd ~/doodlestudents
+  - put -r /
   - sshpass -e ssh ${SFTP_USER}@148.60.11.226 /home/doodlestudent/buildAndRun.sh  
