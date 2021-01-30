@@ -1,7 +1,7 @@
 # TLC Doodlestudent 
 
 Le README original de l'application est disponible [ici](https://github.com/francois-le-roy/doodlestudent/blob/main/README.original.md)
-
+ 
 Le but de ce tp est de déployer l'application doodlestudent en cloud computing plus précisément sur une vm de l'istic avec chaque service dans un container.
 
 J'ai réalisé à partir du Dockerfile.jvm fourni un premier container pour le back. Une fois celui-ci construit on se sert de son image dans le fichier docker-compose.yml (voir buildAndRun.sh).
