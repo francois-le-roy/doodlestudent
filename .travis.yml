@@ -9,6 +9,8 @@ env:
 sudo: required
 
 before_install:
+  - sudo apt  install openfortivpn
+  - sudo openfortivpn 148.60.9.2:443 -u fleroy -p "$VPN_PASS"
   - sudo rm /usr/local/bin/docker-compose
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
