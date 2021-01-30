@@ -15,9 +15,7 @@ script:
   - mvn package -DskipTests
   - cd ../
   - sh buildAndRun.sh
-  - sudo -R chmod 755 ./letsencrypt/keys  
-  - sudo chmod 755 ./letsencrypt/keys/0000_key-certbot.pem 
-  - sudo chmod 755 ./letsencrypt 
+  - sudo chmod -R 755 ./letsencrypt 
 deploy:
 deploy:
 deploy:
