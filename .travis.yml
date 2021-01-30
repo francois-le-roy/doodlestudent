@@ -9,5 +9,5 @@ before_install:
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
 script:
-  - docker-compose up -d
+  - sh buildAndRun.sh
   - docker-compose down
