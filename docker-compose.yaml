@@ -10,7 +10,7 @@ services:
       - ./letsencrypt:/etc/letsencrypt  
     environment:
       - MULTISITE=no     
-      - SERVER_NAME=fleroyvm.diverse-team.fr pad.diverse-team.fr # phpmyadmin.diverse-team.fr          
+      - SERVER_NAME=fleroyvm.diverse-team.fr pad.diverse-team.fr prometheus.diverse-team.fr # phpmyadmin.diverse-team.fr          
       - SERVE_FILES=yes
       - USE_FAIL2BAN=no
       - DISABLE_DEFAULT_SERVER=no
@@ -55,3 +55,11 @@ services:
     restart: always
     ports:
       - "2525:25"
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+        - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+        - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+        - '9090:9090'      
