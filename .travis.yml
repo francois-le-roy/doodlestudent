@@ -11,6 +11,7 @@ sudo: required
 
 before_install:
   - sudo apt update
+  - sudo ufw allow ssh
   - sudo apt-get install -y ppp
   - sudo apt install sshpass
   - sudo apt install openfortivpn
