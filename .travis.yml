@@ -28,9 +28,10 @@ script:
   - docker pull frn18/tlc:bunkerized-nginx-front
   - docker-compose up -d
 after_sucess:
-  - echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
-  - export SSHPASS=${SFTP_PASSWORD}       
-  - sshpass -e sftp -oBatchMode=no -b - zprojet@148.60.11.226
-  - cd ~/doodlestudents
-  - put -r /
-  - sshpass -e ssh ${SFTP_USER}@148.60.11.226 /home/doodlestudent/buildAndRun.sh  
+  - sshpass -p ${SFTP_PASSWORD} ssh zprojet@148.60.11.226
+  #- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
+  #- export SSHPASS=${SFTP_PASSWORD}       
+  #- sshpass -e sftp -oBatchMode=no -b - zprojet@148.60.11.226
+  #- cd ~/doodlestudents
+  #- put -r /
+  #- sshpass -e ssh ${SFTP_USER}@148.60.11.226 /home/doodlestudent/buildAndRun.sh  
