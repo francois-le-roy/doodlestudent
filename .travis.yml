@@ -1,4 +1,4 @@
-dist: trusty
+dist: bionic
 addons: 
   ssh_known_hosts: 
     - "148.60.11.226"
