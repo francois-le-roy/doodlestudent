@@ -9,7 +9,7 @@ before_install:
   - "sudo mv docker-compose /usr/local/bin"
   - "echo \"$DOCKER_PASSWORD\" | docker login -u \"$DOCKER_USERNAME\" --password-stdin"
   - "eval \"$(ssh-agent -s)\""
-  - "cp .travis/id_rsa ~/.ssh/deploy_rsa"
+  - "cp .travis/deploy_rsa ~/.ssh/deploy_rsa"
   - "chmod 600 ~/.ssh/deploy_rsa"
   - "ssh-add ~/.ssh/deploy_rsa"
 deploy: 
