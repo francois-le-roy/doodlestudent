@@ -4,6 +4,7 @@ global:
   external_labels:
     monitor: 'my-monitor'
 scrape_configs:
-  - job_name: 'prometheus'
+  - job_name: 'metrics'
     static_configs:
-      - targets: ['localhost:8080']
+      - targets:
+        - api:8080        

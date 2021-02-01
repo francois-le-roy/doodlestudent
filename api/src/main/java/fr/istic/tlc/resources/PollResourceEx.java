@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.eclipse.microprofile.metrics.MetricUnits;
+
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,6 +111,7 @@ public class PollResourceEx {
 	
 	@PostMapping("/polls")
 	@Transactional
+	@Timed(name = "createPollTimer", description = "A measure of how long it takes to create new poll.", unit = MetricUnits.MILLISECONDS)
 	public ResponseEntity<Poll> createPoll(@Valid @RequestBody Poll poll) {
 		// On enregistre le poll dans la bdd
 		String padId = generateSlug(15);

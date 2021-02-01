@@ -64,4 +64,4 @@ services:
     ports:
         - '9090:9090'
     depends_on:
-        - api      
+        - api
