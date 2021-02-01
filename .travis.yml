@@ -27,5 +27,5 @@ deploy:
     script: .travis/deploy
     skip_cleanup: true
     true: 
-      branch: master
+      branch: main
 
