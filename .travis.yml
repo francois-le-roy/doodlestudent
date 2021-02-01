@@ -1,9 +1,6 @@
 dist: bionic
 addons:
     ssh_known_hosts: 148.60.11.22
-    apt:
-        packages:
-            - sshpass
 services:
   - docker    
 env:
@@ -35,7 +32,7 @@ script:
 deploy:
   provider: script
   skip_cleanup: true
-  script:   - sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "${VPN_PASS}" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6 --no-routes --no-dns --pppd-no-peerdns &
+  script: sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "${VPN_PASS}" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6 --no-routes --no-dns --pppd-no-peerdns &
 && rsync -r --delete-after --quiet / zprojet@148.60.11.22:/home/doodlestudent
   on:
     branch: master
