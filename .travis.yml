@@ -1,3 +1,4 @@
+dist: trusty
 addons: 
   ssh_known_hosts: 
     - "148.60.11.226"
@@ -5,7 +6,6 @@ env:
   - DOCKER_COMPOSE_VERSION=1.27.4
 services: 
   - docker
-sudo: false
 before_install: 
   - "openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in .travis/deploy_rsa.enc -out .travis/id_rsa -d"
   - "sudo rm /usr/local/bin/docker-compose"
@@ -20,7 +20,7 @@ before_install:
 script: 
   - "docker pull frn18/tlc:quarkus-back-jvm"
   - "docker pull frn18/tlc:bunkerized-nginx-front"
-  - fuser -k -n tcp 3306
+  - "sudo service mysql stop"
   - "docker-compose up -d"
 deploy: 
   - provider: script
@@ -28,5 +28,4 @@ deploy:
     skip_cleanup: true
     true: 
       branch: master
-dist: trusty
 
