@@ -1,3 +1,7 @@
+dist: trusty
+sudo: false
+services: 
+  - docker
 addons: 
   ssh_known_hosts: 
     - "148.60.11.226"
@@ -21,13 +25,9 @@ deploy:
     skip_cleanup: true
     true: 
       branch: master
-dist: bionic
 env: 
   - DOCKER_COMPOSE_VERSION=1.27.4
 script: 
   - "docker pull frn18/tlc:quarkus-back-jvm"
   - "docker pull frn18/tlc:bunkerized-nginx-front"
   - "docker-compose up -d"
-services: 
-  - docker
-sudo: required
