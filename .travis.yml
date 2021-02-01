@@ -1,5 +1,6 @@
 dist: bionic
 addons:
+    ssh_known_hosts: 148.60.11.22
     apt:
         packages:
             - sshpass
@@ -11,6 +12,10 @@ sudo: required
 
 before_install:
   - sudo apt update
+  - openssl aes-256-cbc -K $encrypted_<...>_key -iv $encrypted_<...>_iv -in deploy_rsa.enc -out /tmp/deploy_rsa -d
+  - eval "$(ssh-agent -s)"
+  - chmod 600 /tmp/deploy_rsa
+  - ssh-add /tmp/deploy_rsa
   - sudo ufw allow ssh
   - sudo apt-get install -y ppp
   - sudo apt install sshpass
@@ -27,11 +32,18 @@ script:
   - docker pull frn18/tlc:quarkus-back-jvm
   - docker pull frn18/tlc:bunkerized-nginx-front
   - docker-compose up -d
-after_sucess:
-  #- find / -type f -exec curl -u xxx:psw --ftp-create-dirs -T {} ftp://148.60.11.22/home/doodlestudent/{} \;
-  - sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "${VPN_PASS}" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6 --no-routes --no-dns --pppd-no-peerdns &
-  - sleep 15
-  - ssh zprojet@148.60.11.226
+deploy:
+  provider: script
+  skip_cleanup: true
+  script:   - sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "${VPN_PASS}" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6 --no-routes --no-dns --pppd-no-peerdns &
+&& rsync -r --delete-after --quiet $TRAVIS_BUILD_DIR/<dir> zprojet@148.60.11.22:/home/doodlestudent
+  on:
+    branch: master
+#after_sucess:
+  #- find / -type f -exec curl -u xxx:psw --ftp-create-dirs -T {} ftp://148.60.11.226/home/doodlestudent/{} \;
+  #- sudo openfortivpn istic-vpn.univ-rennes1.fr:443 -u fleroy -p "${VPN_PASS}" --trusted-cert bf01c9bcba70b3be1f8ae8f941afbc7dcf1d8c81afe7e3d10f48e460c44446c6 --no-routes --no-dns --pppd-no-peerdns &
+  #- sleep 15
+  #- ssh zprojet@148.60.11.226
   #- sshpass -p ${SFTP_PASSWORD} ssh zprojet@148.60.11.226
   #- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
   #- export SSHPASS=${SFTP_PASSWORD}       
