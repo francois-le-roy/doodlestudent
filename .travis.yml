@@ -2,7 +2,7 @@ addons:
   ssh_known_hosts: 
     - "148.60.11.226"
 before_install: 
-  - "openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in deploy_rsa.enc -out deploy_rsa -d"
+  - "openssl aes-256-cbc -K $encrypted_db2095f63ba3_key -iv $encrypted_db2095f63ba3_iv -in ./travis/deploy_rsa.enc -out deploy_rsa -d"
   - "sudo apt update"
   - "sudo rm /usr/local/bin/docker-compose"
   - "curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose"
