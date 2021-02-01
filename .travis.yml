@@ -49,5 +49,5 @@ deploy:
   #- export SSHPASS=${SFTP_PASSWORD}       
   #- sshpass -e sftp -oBatchMode=no -b - zprojet@148.60.11.226
   #- cd ~/doodlestudents
-  #- put -r /
+  #- put -r / 
   #- sshpass -e ssh ${SFTP_USER}@148.60.11.226 /home/doodlestudent/buildAndRun.sh  
