@@ -28,7 +28,7 @@ script:
   - "docker-compose up -d"
 deploy: 
   - provider: script
-    script: .travis/deploy
+    script: chmod +x .travis/deploy.sh && .travis/deploy.sh
     skip_cleanup: true
     true: 
       branch: main
